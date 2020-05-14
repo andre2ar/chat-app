@@ -1,0 +1,15 @@
+.MessageField {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--message-field-margin) 0;
+    height: var(--message-field-height);
+}
+
+.MessageField textarea {
+    flex: 1;
+    border-radius: .4rem;
+    margin: 0 1rem;
+    padding: 1rem;
+    color: var(--color-font);
+}

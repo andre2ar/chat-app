@@ -1,0 +1,18 @@
+.Layout {
+    min-height: 100vh;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.Layout main {
+    flex-grow: 1;
+    display: flex;
+    width: 120rem;
+    margin: auto;
+}
+
+.Layout main > * {
+    flex-grow: 1;
+}

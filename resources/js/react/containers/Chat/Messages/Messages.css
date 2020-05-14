@@ -1,0 +1,11 @@
+.Messages {
+    height: calc(100vh - var(--toolbar-height) - var(--message-field-height) - (2 * var(--message-field-margin)));
+    display: flex;
+    flex-flow: column nowrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.Messages > :first-child {
+    margin-top: auto;
+}

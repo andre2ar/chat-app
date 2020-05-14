@@ -1,0 +1,13 @@
+.Toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--toolbar-height);
+    background-color: var(--color-primary);
+    padding: 0 3rem;
+}
+
+.Logo {
+    color: var(--color-tertiary);
+    font-weight: 700;
+}

@@ -1,0 +1,22 @@
+.MessageBubble {
+    color: var(--color-message-text);
+    border-radius: .8rem;
+    margin: .5rem 1rem;
+    padding: 1rem;
+    max-width: 40%;
+    display: flex;
+    word-break: break-word;
+}
+
+.BotMessage {
+    background-color: white;
+    align-self: flex-start;
+}
+
+.UserMessage {
+    background-color: var(--color-user-message);
+    justify-content: flex-end;
+    align-self: flex-end;
+}
+
+

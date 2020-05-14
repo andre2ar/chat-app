@@ -1,0 +1,41 @@
+:root {
+    --toolbar-height: 6rem;
+    --message-field-height: 6rem;
+    --message-field-margin: 2rem;
+
+    --color-background: #E6E7E8;
+    --color-font: #696969;
+
+    --color-primary: #313d6a;
+    --color-secondary: #3157a4;
+    --color-tertiary: #ffcd29;
+
+    --color-message-text: #303030;
+    --color-user-message: #DCF8C6;
+
+}
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;/*10px*/
+}
+
+body {
+    box-sizing: border-box;
+    color: var(--color-font);
+    font-family: "Arial", sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.7;
+    background-color: var(--color-background);
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

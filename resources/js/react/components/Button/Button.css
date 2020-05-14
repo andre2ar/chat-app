@@ -1,0 +1,13 @@
+.Button {
+    border: none;
+    border-radius: .5rem;
+    padding: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+    background-color: var(--color-tertiary);
+}
+
+.Button:hover {
+    filter: brightness(85%);
+}
