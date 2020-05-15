@@ -14,13 +14,20 @@ const Messages = ({messages}) => {
 
     return (
         <div id="messages" className='Messages'>
-            { messages.map((message, index) => {
-                return (
-                    <MessageBubble key={index} type={message.from}>
-                        {message.text}
-                    </MessageBubble>
-                )
-            }) }
+            { messages.length > 0 ?
+                messages.map((message, index) => {
+                    return (
+                        <MessageBubble key={index} type={message.from}>
+                            {message.text}
+                        </MessageBubble>
+                    )
+                }) :
+                <div className='NoMessages'>
+                    <h1>
+                        No messages yet
+                    </h1>
+                </div>
+            }
         </div>
     );
 }

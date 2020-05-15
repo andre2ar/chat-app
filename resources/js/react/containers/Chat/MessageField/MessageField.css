@@ -6,9 +6,10 @@
     height: var(--message-field-height);
 }
 
-.MessageField textarea {
+.MessageField input {
     flex: 1;
     border-radius: .4rem;
+    border: none;
     margin: 0 1rem;
     padding: 1rem;
     color: var(--color-font);

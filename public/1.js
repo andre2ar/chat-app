@@ -12,7 +12,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".Button {\n    border: none;\n    border-radius: .5rem;\n    padding: .8rem;\n    font-weight: 700;\n    text-transform: uppercase;\n    color: white;\n    background-color: var(--color-tertiary);\n}\n\n.Button:hover {\n    -webkit-filter: brightness(85%);\n            filter: brightness(85%);\n}\n", ""]);
+exports.push([module.i, ".Button {\n    border: none;\n    border-radius: .5rem;\n    padding: .8rem;\n    font-weight: 700;\n    text-transform: uppercase;\n    color: white;\n    background-color: var(--color-secondary);\n}\n\n.Button:hover {\n    -webkit-filter: brightness(85%);\n            filter: brightness(85%);\n}\n", ""]);
 
 // exports
 
@@ -69,7 +69,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".MessageField {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin: var(--message-field-margin) 0;\n    height: var(--message-field-height);\n}\n\n.MessageField textarea {\n    flex: 1;\n    border-radius: .4rem;\n    margin: 0 1rem;\n    padding: 1rem;\n    color: var(--color-font);\n}\n", ""]);
+exports.push([module.i, ".MessageField {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin: var(--message-field-margin) 0;\n    height: var(--message-field-height);\n}\n\n.MessageField input {\n    flex: 1;\n    border-radius: .4rem;\n    border: none;\n    margin: 0 1rem;\n    padding: 1rem;\n    color: var(--color-font);\n}\n", ""]);
 
 // exports
 
@@ -88,7 +88,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".Messages {\n    height: calc(100vh - var(--toolbar-height) - var(--message-field-height) - (2 * var(--message-field-margin)));\n    display: flex;\n    flex-flow: column nowrap;\n    overflow-y: auto;\n    overflow-x: hidden;\n}\n\n.Messages > :first-child {\n    margin-top: auto;\n}\n", ""]);
+exports.push([module.i, ".Messages {\n    height: calc(100vh - var(--toolbar-height) - var(--message-field-height) - (2 * var(--message-field-margin)));\n    display: flex;\n    flex-flow: column nowrap;\n    overflow-y: auto;\n    overflow-x: hidden;\n}\n\n.Messages > :first-child {\n    margin-top: auto;\n}\n\n.NoMessages {\n    text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -348,7 +348,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var MessageField = function MessageField(_ref) {
-  var sendMessage = _ref.sendMessage;
+  var sendMessage = _ref.sendMessage,
+      token = _ref.token;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
       _useState2 = _slicedToArray(_useState, 2),
@@ -359,7 +360,7 @@ var MessageField = function MessageField(_ref) {
 
   var sendMessageHandler = function sendMessageHandler(e) {
     e.preventDefault();
-    sendMessage(message);
+    sendMessage(message, token);
     setMessage('');
     refTextarea.current.focus();
   };
@@ -368,7 +369,7 @@ var MessageField = function MessageField(_ref) {
     onSubmit: sendMessageHandler
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "MessageField"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     required: true,
     value: message,
     ref: refTextarea,
@@ -379,15 +380,21 @@ var MessageField = function MessageField(_ref) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button_Button__WEBPACK_IMPORTED_MODULE_4__["default"], null, "Send")));
 };
 
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.chat.token
+  };
+};
+
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    sendMessage: function sendMessage(message) {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_2__["sendMessage"](message));
+    sendMessage: function sendMessage(message, token) {
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_2__["sendMessage"](message, token));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatchToProps)(MessageField));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(MessageField));
 
 /***/ }),
 
@@ -454,12 +461,14 @@ var Messages = function Messages(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "messages",
     className: "Messages"
-  }, messages.map(function (message, index) {
+  }, messages.length > 0 ? messages.map(function (message, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageBubble_MessageBubble__WEBPACK_IMPORTED_MODULE_4__["default"], {
       key: index,
       type: message.from
     }, message.text);
-  }));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "NoMessages"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "No messages yet")));
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -469,6 +478,143 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Messages));
+
+/***/ }),
+
+/***/ "./resources/js/react/models/Message.js":
+/*!**********************************************!*\
+  !*** ./resources/js/react/models/Message.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Message = function Message(from, text) {
+  _classCallCheck(this, Message);
+
+  this.from = from;
+  this.text = text;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Message);
+
+/***/ }),
+
+/***/ "./resources/js/react/store/actions/chat.js":
+/*!**************************************************!*\
+  !*** ./resources/js/react/store/actions/chat.js ***!
+  \**************************************************/
+/*! exports provided: sendMessageStart, sendMessageSuccess, sendMessageFail, sendMessage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendMessageStart", function() { return sendMessageStart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendMessageSuccess", function() { return sendMessageSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendMessageFail", function() { return sendMessageFail; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendMessage", function() { return sendMessage; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actionsTypes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actionsTypes */ "./resources/js/react/store/actions/actionsTypes.js");
+/* harmony import */ var _models_Message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Message */ "./resources/js/react/models/Message.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var sendMessageStart = function sendMessageStart() {
+  return {
+    type: _actionsTypes__WEBPACK_IMPORTED_MODULE_1__["SEND_MESSAGE_START"]
+  };
+};
+var sendMessageSuccess = function sendMessageSuccess(message, responseMessage) {
+  var token = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  return {
+    type: _actionsTypes__WEBPACK_IMPORTED_MODULE_1__["SEND_MESSAGE_SUCCESS"],
+    message: message,
+    responseMessage: responseMessage,
+    token: token
+  };
+};
+var sendMessageFail = function sendMessageFail(error) {
+  return {
+    type: _actionsTypes__WEBPACK_IMPORTED_MODULE_1__["SEND_MESSAGE_FAIL"],
+    error: error
+  };
+};
+/***********************************FUNCTIONS************************************/
+
+var sendMessage = function sendMessage(message) {
+  var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  return /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(dispatch) {
+      var _response$data$token;
+
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              dispatch(sendMessageStart());
+              response = null;
+              _context.prev = 2;
+              _context.next = 5;
+              return axios.post('/api/v1/send-message', {
+                message: message
+              }, {
+                headers: {
+                  Authorization: "Bearer ".concat(token)
+                }
+              });
+
+            case 5:
+              response = _context.sent;
+              _context.next = 11;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](2);
+              return _context.abrupt("return", dispatch(sendMessageFail(_context.t0.data.error)));
+
+            case 11:
+              dispatch(sendMessageSuccess(new _models_Message__WEBPACK_IMPORTED_MODULE_2__["default"]('user', message), new _models_Message__WEBPACK_IMPORTED_MODULE_2__["default"]('bot', response.data.message), (_response$data$token = response.data.token) !== null && _response$data$token !== void 0 ? _response$data$token : token));
+
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[2, 8]]);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+/***/ }),
+
+/***/ "./resources/js/react/store/actions/index.js":
+/*!***************************************************!*\
+  !*** ./resources/js/react/store/actions/index.js ***!
+  \***************************************************/
+/*! exports provided: sendMessage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _chat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chat */ "./resources/js/react/store/actions/chat.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "sendMessage", function() { return _chat__WEBPACK_IMPORTED_MODULE_0__["sendMessage"]; });
+
+
 
 /***/ })
 

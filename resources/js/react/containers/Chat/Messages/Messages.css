@@ -9,3 +9,7 @@
 .Messages > :first-child {
     margin-top: auto;
 }
+
+.NoMessages {
+    text-align: center;
+}

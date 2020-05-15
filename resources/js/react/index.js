@@ -9,13 +9,11 @@ import thunk from "redux-thunk";
 import App from './App';
 
 /* Reducers */
-import authReducer from './store/reducers/auth';
 import chatReducer from './store/reducers/chat';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
 
 const rootReducer = combineReducers({
-    auth: authReducer,
     chat: chatReducer,
 });
 

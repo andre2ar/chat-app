@@ -6,14 +6,13 @@ import * as actions from '../../../store/actions';
 import './MessageField.css';
 import Button from "../../../components/Button/Button";
 
-const MessageField = ({sendMessage}) => {
+const MessageField = ({sendMessage, token}) => {
     const [message, setMessage] = useState('');
     const refTextarea = useRef(null);
 
     const sendMessageHandler = (e) => {
         e.preventDefault();
-
-        sendMessage(message);
+        sendMessage(message, token);
 
         setMessage('');
         refTextarea.current.focus();
@@ -22,8 +21,8 @@ const MessageField = ({sendMessage}) => {
     return (
         <form onSubmit={sendMessageHandler}>
             <div className='MessageField'>
-                <textarea required value={message} ref={refTextarea} placeholder='Type your message'
-                          onChange={(event) => setMessage(event.target.value)}></textarea>
+                <input required value={message} ref={refTextarea} placeholder='Type your message'
+                          onChange={(event) => setMessage(event.target.value)}/>
 
                 <Button>
                     Send
@@ -33,10 +32,16 @@ const MessageField = ({sendMessage}) => {
     );
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
     return {
-        sendMessage: (message) => dispatch(actions.sendMessage(message))
+        token: state.chat.token,
     }
 };
 
-export default connect(null, mapDispatchToProps) (MessageField);
+const mapDispatchToProps = dispatch => {
+    return {
+        sendMessage: (message, token) => dispatch(actions.sendMessage(message, token))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (MessageField);

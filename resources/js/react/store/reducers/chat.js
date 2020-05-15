@@ -4,6 +4,7 @@ const initialState = {
     messages: [],
     error: null,
     loading: false,
+    token: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,7 +19,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                messages: messages
+                messages: messages,
+                token: action.token
             };
         case actionTypes.SEND_MESSAGE_FAIL:
             return {
