@@ -6569,7 +6569,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".Toolbar {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    min-height: var(--toolbar-height);\n    background-color: var(--color-primary);\n    padding: 0 3rem;\n}\n\n.Logo {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    color: var(--color-secondary);\n    font-weight: 700;\n    border: 1px solid var(--color-secondary);\n    border-radius: .5rem;\n    padding: .5rem;\n}\n\n.Logo img {\n    margin: 0 1rem;\n}\n", ""]);
+exports.push([module.i, ".Toolbar {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    min-height: var(--toolbar-height);\n    background-color: var(--color-primary);\n    padding: 0 3rem;\n}\n\n.Logo {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    color: var(--color-secondary);\n    font-weight: 700;\n    border: 1px solid var(--color-secondary);\n    border-radius: .5rem;\n    padding: .5rem;\n}\n\n.Logo img {\n    margin: 0 1rem;\n    border-radius: 3px;\n}\n", ""]);
 
 // exports
 
@@ -73466,8 +73466,8 @@ var reducer = function reducer() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/andre/Área de Trabalho/Laravel/chat-app/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/andre/Área de Trabalho/Laravel/chat-app/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/andre/Área de Trabalho/chat-app/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/andre/Área de Trabalho/chat-app/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

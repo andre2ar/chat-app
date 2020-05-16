@@ -11,40 +11,26 @@ class Chat
 {
     public static function talk($message) : String {
         $user = Auth('sanctum')->user();
-        $responseMessage = "I did not understand, can you say it in a different way?";
+        $response_message = "I did not understand, can you say it in a different way?";
         $matches = [];
 
         $pattern = '/balance|deposit|withdraw|default currency/';
         preg_match($pattern, $message, $matches);
         if(!empty($matches)) {
-            $responseMessage = self::account_chat($message, $user);
+            $response_message = self::account_chat($message, $user);
         }
 
         //Convert
         preg_match('/convert \d+ [a-zA-Z]{3} to [a-zA-Z]{3}/', $message, $matches);
         if(!empty($matches)) {
-            $data_exploded = explode(' ', $matches[0]);
-            $from = strtoupper($data_exploded[2]);
-            $to = strtoupper($data_exploded[4]);
-            $amount = $data_exploded[1];
-
-            if(
-                CurrencyConverter::validate_currency($from) &&
-                CurrencyConverter::validate_currency($to) &&
-                is_numeric($amount)
-            ) {
-                $converted_amount = CurrencyConverter::convert($from, $to, $amount);
-                $converted_amount = number_format($converted_amount, 2);
-
-                $amount = number_format($amount, 2);
-                $responseMessage = "$from $amount correspond approximately to $to $converted_amount";
-            } else {
-                $responseMessage = "Please provide a valid amount and valid currencies";
-            }
+            $response_message = self::convert_chat($matches);
         }
 
+        if(empty($matches)) {
+            $response_message = self::general_chat($message);
+        }
 
-        return $responseMessage;
+        return $response_message;
     }
 
     private static function account_chat($message, $user) : String {
@@ -144,5 +130,39 @@ class Chat
         }
 
         return $responseMessage;
+    }
+
+    private static function convert_chat($matches) : String {
+        $data_exploded = explode(' ', $matches[0]);
+        $from = strtoupper($data_exploded[2]);
+        $to = strtoupper($data_exploded[4]);
+        $amount = $data_exploded[1];
+
+        if(
+            CurrencyConverter::validate_currency($from) &&
+            CurrencyConverter::validate_currency($to) &&
+            is_numeric($amount)
+        ) {
+            $converted_amount = CurrencyConverter::convert($from, $to, $amount);
+            $converted_amount = number_format($converted_amount, 2);
+
+            $amount = number_format($amount, 2);
+            $responseMessage = "$from $amount correspond approximately to $to $converted_amount";
+        } else {
+            $responseMessage = "Please provide a valid amount and valid currencies";
+        }
+
+        return $responseMessage;
+    }
+
+    private static function general_chat($message) : String{
+        $message = strtolower(trim($message));
+        $responses = [
+            'hi' => 'Hi, how can I help you?',
+            'what can you do?' => 'I can help you with your account.',
+            'what is your name?' => 'My name is André.',
+        ];
+
+        return $responses[$message] ?? "I'm sorry, I can not understand.";
     }
 }
