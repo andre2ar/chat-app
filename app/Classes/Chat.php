@@ -11,26 +11,20 @@ class Chat
 {
     public static function talk($message) : String {
         $user = Auth('sanctum')->user();
-        $response_message = "I did not understand, can you say it in a different way?";
         $matches = [];
 
-        $pattern = '/balance|deposit|withdraw|default currency/';
-        preg_match($pattern, $message, $matches);
+        preg_match('/balance|deposit|withdraw|default currency/', $message, $matches);
         if(!empty($matches)) {
-            $response_message = self::account_chat($message, $user);
+            return self::account_chat($message, $user);
         }
 
         //Convert
         preg_match('/convert \d+ [a-zA-Z]{3} to [a-zA-Z]{3}/', $message, $matches);
         if(!empty($matches)) {
-            $response_message = self::convert_chat($matches);
+            return self::convert_chat($matches);
         }
 
-        if(empty($matches)) {
-            $response_message = self::general_chat($message);
-        }
-
-        return $response_message;
+        return self::general_chat($message);
     }
 
     private static function account_chat($message, $user) : String {
