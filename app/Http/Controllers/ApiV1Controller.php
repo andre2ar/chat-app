@@ -12,6 +12,7 @@ class ApiV1Controller extends Controller{
     public function talk(Request $request) {
         $authenticated = Auth('sanctum')->check();
         $message = strtolower($request->message);
+        $responseMessage = "";
         $matches = [];
 
         if(!$authenticated) {
@@ -55,6 +56,8 @@ class ApiV1Controller extends Controller{
                     'token' => $user->createToken($device_name)->plainTextToken
                 ]);
             }
+
+            $responseMessage = Chat::talk($message);
         } else {
             preg_match('/signin|login|registrate|sign up/', $message, $matches);
             if(!empty($matches)) {
@@ -62,10 +65,12 @@ class ApiV1Controller extends Controller{
                     'message' => "You already logged in",
                 ]);
             }
+
+            $responseMessage = Chat::talk($message);
         }
 
         return response()->json([
-            'message' => Chat::talk($message),
+            'message' => $responseMessage,
         ]);
     }
 }
